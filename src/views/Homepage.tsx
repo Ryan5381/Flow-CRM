@@ -1,5 +1,6 @@
 import Sidebar from "../components/Sildebar";
 import Header from "../components/Header";
+import Analyze from "../components/Analyze";
 
 const Homepage = () => {
   return (
@@ -16,12 +17,13 @@ const Homepage = () => {
         <main className="flex-1 overflow-y-auto p-6">
           <div className="mx-auto max-w-7xl">
             {/* 歡迎卡片 */}
-            <div className="mb-6 rounded-lg bg-white p-6 shadow-sm">
+            <div className="mb-6 rounded-lg bg-white  shadow-sm">
               <h1 className="mb-2 text-2xl font-bold text-gray-800">
                 歡迎使用 Flow CRM
               </h1>
               <p className="text-gray-600">管理您的客戶關係,提升業務效率</p>
             </div>
+            <Analyze />
           </div>
         </main>
       </div>
