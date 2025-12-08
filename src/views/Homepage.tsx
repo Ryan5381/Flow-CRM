@@ -1,6 +1,7 @@
 import Sidebar from "../components/Sildebar";
 import Header from "../components/Header";
 import Analyze from "../components/Analyze";
+import RecentActivity from "../components/RecentActivity";
 
 const Homepage = () => {
   return (
@@ -24,6 +25,7 @@ const Homepage = () => {
               <p className="text-gray-600">管理您的客戶關係,提升業務效率</p>
             </div>
             <Analyze />
+            <RecentActivity />
           </div>
         </main>
       </div>
