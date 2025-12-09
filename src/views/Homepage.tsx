@@ -2,6 +2,7 @@ import Sidebar from "../components/Sildebar";
 import Header from "../components/Header";
 import Analyze from "../components/Analyze";
 import RecentActivity from "../components/RecentActivity";
+import Todo from "../components/Todo";
 
 const Homepage = () => {
   return (
@@ -26,6 +27,7 @@ const Homepage = () => {
             </div>
             <Analyze />
             <RecentActivity />
+            <Todo />
           </div>
         </main>
       </div>
