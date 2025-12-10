@@ -6,8 +6,8 @@ import {
   FiCrop,
   FiTrendingUp,
   FiPieChart,
-  FiGrid,
 } from "react-icons/fi";
+import LogoImg from "../assets/logo.png";
 const { Sider, Content } = Layout;
 
 const Sildebar = () => {
@@ -31,7 +31,7 @@ const Sildebar = () => {
           style={{ background: "#fff", borderRight: "1px solid #eee" }}
         >
           <div className="flex items-center p-4 text-xl font-bold text-[#4d4d4d]">
-            <FiGrid className="mr-2 text-xl" />
+            <img src={LogoImg} alt="logo" className="w-10 h-10" />
             CRM
           </div>
 
