@@ -1,0 +1,195 @@
+[
+  {
+    "month": "2024-01",
+    "label": "1月",
+    "totalSales": 85000,
+    "salesChangePercent": 4,
+    "newCustomers": 30,
+    "newCustomersChangePercent": 6
+  },
+  {
+    "month": "2024-02",
+    "label": "2月",
+    "totalSales": 90000,
+    "salesChangePercent": 5,
+    "newCustomers": 33,
+    "newCustomersChangePercent": 8
+  },
+  {
+    "month": "2024-03",
+    "label": "3月",
+    "totalSales": 94000,
+    "salesChangePercent": 4,
+    "newCustomers": 35,
+    "newCustomersChangePercent": 7
+  },
+  {
+    "month": "2024-04",
+    "label": "4月",
+    "totalSales": 98000,
+    "salesChangePercent": 4,
+    "newCustomers": 37,
+    "newCustomersChangePercent": 6
+  },
+  {
+    "month": "2024-05",
+    "label": "5月",
+    "totalSales": 103000,
+    "salesChangePercent": 5,
+    "newCustomers": 40,
+    "newCustomersChangePercent": 9
+  },
+  {
+    "month": "2024-06",
+    "label": "6月",
+    "totalSales": 108000,
+    "salesChangePercent": 5,
+    "newCustomers": 44,
+    "newCustomersChangePercent": 10
+  },
+  {
+    "month": "2024-07",
+    "label": "7月",
+    "totalSales": 113000,
+    "salesChangePercent": 5,
+    "newCustomers": 46,
+    "newCustomersChangePercent": 8
+  },
+  {
+    "month": "2024-08",
+    "label": "8月",
+    "totalSales": 118000,
+    "salesChangePercent": 4,
+    "newCustomers": 48,
+    "newCustomersChangePercent": 7
+  },
+  {
+    "month": "2024-09",
+    "label": "9月",
+    "totalSales": 120000,
+    "salesChangePercent": 3,
+    "newCustomers": 49,
+    "newCustomersChangePercent": 5
+  },
+  {
+    "month": "2024-10",
+    "label": "10月",
+    "totalSales": 125000,
+    "salesChangePercent": 4,
+    "newCustomers": 52,
+    "newCustomersChangePercent": 7
+  },
+  {
+    "month": "2024-11",
+    "label": "11月",
+    "totalSales": 130000,
+    "salesChangePercent": 4,
+    "newCustomers": 55,
+    "newCustomersChangePercent": 8
+  },
+  {
+    "month": "2024-12",
+    "label": "12月",
+    "totalSales": 138000,
+    "salesChangePercent": 6,
+    "newCustomers": 60,
+    "newCustomersChangePercent": 9
+  },
+
+  {
+    "month": "2025-01",
+    "label": "1月",
+    "totalSales": 90000,
+    "salesChangePercent": 5,
+    "newCustomers": 35,
+    "newCustomersChangePercent": 8
+  },
+  {
+    "month": "2025-02",
+    "label": "2月",
+    "totalSales": 95000,
+    "salesChangePercent": 6,
+    "newCustomers": 38,
+    "newCustomersChangePercent": 9
+  },
+  {
+    "month": "2025-03",
+    "label": "3月",
+    "totalSales": 102000,
+    "salesChangePercent": 7,
+    "newCustomers": 42,
+    "newCustomersChangePercent": 10
+  },
+  {
+    "month": "2025-04",
+    "label": "4月",
+    "totalSales": 108000,
+    "salesChangePercent": 6,
+    "newCustomers": 45,
+    "newCustomersChangePercent": 9
+  },
+  {
+    "month": "2025-05",
+    "label": "5月",
+    "totalSales": 115000,
+    "salesChangePercent": 7,
+    "newCustomers": 48,
+    "newCustomersChangePercent": 11
+  },
+  {
+    "month": "2025-06",
+    "label": "6月",
+    "totalSales": 120000,
+    "salesChangePercent": 5,
+    "newCustomers": 50,
+    "newCustomersChangePercent": 10
+  },
+  {
+    "month": "2025-07",
+    "label": "7月",
+    "totalSales": 125000,
+    "salesChangePercent": 4,
+    "newCustomers": 52,
+    "newCustomersChangePercent": 8
+  },
+  {
+    "month": "2025-08",
+    "label": "8月",
+    "totalSales": 130000,
+    "salesChangePercent": 4,
+    "newCustomers": 55,
+    "newCustomersChangePercent": 7
+  },
+  {
+    "month": "2025-09",
+    "label": "9月",
+    "totalSales": 136000,
+    "salesChangePercent": 5,
+    "newCustomers": 58,
+    "newCustomersChangePercent": 8
+  },
+  {
+    "month": "2025-10",
+    "label": "10月",
+    "totalSales": 142000,
+    "salesChangePercent": 4,
+    "newCustomers": 62,
+    "newCustomersChangePercent": 7
+  },
+  {
+    "month": "2025-11",
+    "label": "11月",
+    "totalSales": 148000,
+    "salesChangePercent": 4,
+    "newCustomers": 66,
+    "newCustomersChangePercent": 7
+  },
+  {
+    "month": "2025-12",
+    "label": "12月",
+    "totalSales": 155000,
+    "salesChangePercent": 5,
+    "newCustomers": 70,
+    "newCustomersChangePercent": 8
+  }
+]
