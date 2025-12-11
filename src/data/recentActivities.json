@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "customerName": "安心電子",
+    "activityType": "電話聯絡",
+    "owner": "Debby",
+    "activityTime": "2026-03-25 10:00",
+    "status": "待跟進"
+  },
+  {
+    "id": 2,
+    "customerName": "星光科技",
+    "activityType": "寄送報價",
+    "owner": "Kevin",
+    "activityTime": "2026-04-24 15:30",
+    "status": "完成"
+  },
+  {
+    "id": 3,
+    "customerName": "玉山銀行",
+    "activityType": "產品簡報",
+    "owner": "Debby",
+    "activityTime": "2026-01-19 14:00",
+    "status": "延後"
+  },
+  {
+    "id": 4,
+    "customerName": "藍海旅行社",
+    "activityType": "會議",
+    "owner": "Amy",
+    "activityTime": "2026-04-07 11:00",
+    "status": "待跟進"
+  },
+  {
+    "id": 5,
+    "customerName": "大禾科技",
+    "activityType": "Email跟進",
+    "owner": "Kevin",
+    "activityTime": "2026-05-02 09:00",
+    "status": "待跟進"
+  },
+  {
+    "id": 6,
+    "customerName": "明賢有限公司",
+    "activityType": "寄送合約",
+    "owner": "Debby",
+    "activityTime": "2026-01-19 13:00",
+    "status": "完成"
+  },
+  {
+    "id": 7,
+    "customerName": "光速網通",
+    "activityType": "會議",
+    "owner": "Amy",
+    "activityTime": "2026-05-30 10:00",
+    "status": "完成"
+  },
+  {
+    "id": 8,
+    "customerName": "宏亞國際",
+    "activityType": "電話聯絡",
+    "owner": "Kevin",
+    "activityTime": "2026-06-01 15:00",
+    "status": "延後"
+  },
+  {
+    "id": 9,
+    "customerName": "永順工程",
+    "activityType": "產品簡報",
+    "owner": "Debby",
+    "activityTime": "2026-05-28 14:00",
+    "status": "完成"
+  },
+  {
+    "id": 10,
+    "customerName": "晶晶貿易",
+    "activityType": "Email跟進",
+    "owner": "Amy",
+    "activityTime": "2026-03-27 10:00",
+    "status": "待跟進"
+  },
+  {
+    "id": 11,
+    "customerName": "海立企業",
+    "activityType": "電話聯絡",
+    "owner": "Kevin",
+    "activityTime": "2026-02-26 13:00",
+    "status": "完成"
+  },
+  {
+    "id": 12,
+    "customerName": "新光材料",
+    "activityType": "寄送報價",
+    "owner": "Debby",
+    "activityTime": "2025-12-25 16:30",
+    "status": "待跟進"
+  },
+  {
+    "id": 13,
+    "customerName": "泰和能源",
+    "activityType": "會議",
+    "owner": "Amy",
+    "activityTime": "2026-02-24 09:00",
+    "status": "延後"
+  },
+  {
+    "id": 14,
+    "customerName": "匯誠股份有限公司",
+    "activityType": "Email跟進",
+    "owner": "Kevin",
+    "activityTime": "2026-02-23 11:00",
+    "status": "完成"
+  },
+  {
+    "id": 15,
+    "customerName": "立新物流",
+    "activityType": "寄送合約",
+    "owner": "Debby",
+    "activityTime": "2026-02-22 14:00",
+    "status": "待跟進"
+  }
+]
