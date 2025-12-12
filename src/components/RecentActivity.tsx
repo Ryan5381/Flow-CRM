@@ -1,6 +1,9 @@
 import { Table, Tag } from "antd";
+import recentActivitiesJson from "../data/recentActivities.json";
 import type { ColumnsType } from "antd/es/table";
 import type { ActivityData } from "../types/data";
+
+const recentActivities = recentActivitiesJson as ActivityData[];
 
 const RecentActivity = () => {
   const columns: ColumnsType<ActivityData> = [
@@ -31,10 +34,9 @@ const RecentActivity = () => {
     {
       title: "狀態",
       dataIndex: "status",
+      key: "status",
       align: "center",
       render: (status: ActivityData["status"]) => {
-        if (!status) return null;
-
         let color: string = "default";
         if (status === "完成") color = "green";
         if (status === "待跟進") color = "gold";
@@ -45,13 +47,20 @@ const RecentActivity = () => {
   ];
 
   return (
-    <div className=" p-6 my-5 rounded-xl border-gray-200 bg-white">
+    <div className="my-5 rounded-xl border border-gray-200 bg-white p-6">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="ml-3 text-base font-semibold text-gray-900">
           近期客戶活動
         </h2>
       </div>
-      <Table columns={columns} pagination={false} size="middle" />
+
+      <Table<ActivityData>
+        rowKey="id"
+        columns={columns}
+        dataSource={recentActivities}
+        pagination={{ pageSize: 5 }}
+        size="middle"
+      />
     </div>
   );
 };
