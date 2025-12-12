@@ -17,6 +17,10 @@ function App() {
             itemSelectedColor: "#666",
             itemSelectedBg: "#e8e8e8",
           },
+          Table: {
+            headerBg: "#E8E8E8",
+            headerBorderRadius: 1,
+          },
         },
       }}
     >
