@@ -8,3 +8,10 @@ export interface ActivityData {
   activityTime: string;
   status: ActivityStatus;
 }
+
+export interface TodoData {
+  id: number;
+  title: string;
+  dueDate: string;
+  completed: boolean;
+}
