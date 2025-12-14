@@ -15,3 +15,12 @@ export interface TodoData {
   dueDate: string;
   completed: boolean;
 }
+
+export interface OverviewData {
+  month: string;
+  label: string;
+  totalSales: number;
+  salesChangePercent: number;
+  newCustomers: number;
+  newCustomersChangePercent: number;
+}
