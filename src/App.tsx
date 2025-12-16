@@ -4,6 +4,9 @@ import { ConfigProvider } from "antd";
 
 function App() {
   const Homepage = lazy(() => import("./views/Homepage"));
+  const Login = lazy(() => import("./views/Login"));
+  const Register = lazy(() => import("./views/Register"));
+
   return (
     <ConfigProvider
       theme={{
@@ -25,9 +28,17 @@ function App() {
       }}
     >
       <HashRouter>
-        <Suspense>
+        <Suspense
+          fallback={
+            <div className="flex h-screen items-center justify-center">
+              載入中...
+            </div>
+          }
+        >
           <Routes>
             <Route path="/" element={<Homepage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </Suspense>
       </HashRouter>

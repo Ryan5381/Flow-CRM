@@ -24,3 +24,15 @@ export interface OverviewData {
   newCustomers: number;
   newCustomersChangePercent: number;
 }
+
+export interface RegisterFormValues {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+export interface LoginFormValues {
+  username: string;
+  password: string;
+}
