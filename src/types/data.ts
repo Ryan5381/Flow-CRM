@@ -14,6 +14,8 @@ export interface TodoData {
   title: string;
   dueDate: string;
   completed: boolean;
+  user_id?: string;
+  created_at?: string;
 }
 
 export interface OverviewData {
