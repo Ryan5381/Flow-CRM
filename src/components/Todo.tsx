@@ -8,51 +8,24 @@ import {
   Spin,
   message,
 } from "antd";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { DeleteOutlined } from "@ant-design/icons";
-import type { TodoData } from "../types/data";
-import {
-  fetchTodos,
-  updateTodoStatus,
-  deleteTodo,
-} from "../services/todoService";
+import { useTodos } from "../hooks/useTodos";
 
 type SortType = "dueDate" | "created" | "status";
 
 const TodoSection = () => {
-  const [todos, setTodos] = useState<TodoData[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { todos, isLoading, updateTodoStatus, deleteTodo } = useTodos();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const [sortBy, setSortBy] = useState<SortType>("dueDate");
-
-  // 從 Supabase 載入待辦事項
-  useEffect(() => {
-    loadTodos();
-  }, []);
-
-  const loadTodos = async () => {
-    try {
-      setLoading(true);
-      const data = await fetchTodos();
-      setTodos(data);
-    } catch (error) {
-      message.error("載入待辦事項失敗");
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleToggleTodo = async (id: number) => {
     const todo = todos.find((t) => t.id === id);
     if (!todo) return;
 
     try {
-      await updateTodoStatus(id, !todo.completed);
-      setTodos(
-        todos.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t))
-      );
+      await updateTodoStatus({ id, completed: !todo.completed });
       message.success("更新成功");
     } catch (error) {
       message.error("更新失敗");
@@ -63,11 +36,10 @@ const TodoSection = () => {
   const handleDeleteTodo = async (id: number) => {
     try {
       await deleteTodo(id);
-      const newTodos = todos.filter((todo) => todo.id !== id);
-      setTodos(newTodos);
-
-      // 如果刪除後當前頁沒有數據，回到上一頁
-      const maxPage = Math.ceil(newTodos.length / pageSize);
+      
+      // 如果刪除後當前頁沒有數據，回到上一頁 (這部分現在由 todos 長度自動觸發 useMemo)
+      const newTodosCount = todos.length - 1;
+      const maxPage = Math.ceil(newTodosCount / pageSize);
       if (currentPage > maxPage && maxPage > 0) {
         setCurrentPage(maxPage);
       }
@@ -115,7 +87,7 @@ const TodoSection = () => {
 
   return (
     <section className="rounded-xl border border-gray-200 bg-white p-6">
-      {loading ? (
+      {isLoading ? (
         <div className="flex justify-center py-10">
           <Spin size="large" tip="載入中..." />
         </div>
