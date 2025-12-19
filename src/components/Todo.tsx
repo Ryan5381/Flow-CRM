@@ -9,8 +9,9 @@ import {
   message,
 } from "antd";
 import { useState, useMemo } from "react";
-import { DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { useTodos } from "../hooks/useTodos";
+import AddTodoModal from "./AddTodoModal";
 
 type SortType = "dueDate" | "created" | "status";
 
@@ -19,6 +20,7 @@ const TodoSection = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const [sortBy, setSortBy] = useState<SortType>("dueDate");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleToggleTodo = async (id: number) => {
     const todo = todos.find((t) => t.id === id);
@@ -110,6 +112,8 @@ const TodoSection = () => {
               <Button
                 type="primary"
                 size="middle"
+                icon={<PlusOutlined />}
+                onClick={() => setIsModalOpen(true)}
                 style={{ color: "#fff", backgroundColor: "#999" }}
               >
                 新增待辦
@@ -178,6 +182,11 @@ const TodoSection = () => {
               </div>
             </>
           )}
+
+          <AddTodoModal
+            open={isModalOpen}
+            onCancel={() => setIsModalOpen(false)}
+          />
         </>
       )}
     </section>
