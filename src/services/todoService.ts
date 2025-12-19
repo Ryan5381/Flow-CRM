@@ -43,3 +43,13 @@ export async function deleteTodo(id: number): Promise<void> {
     throw error;
   }
 }
+
+// 新增待辦事項
+export async function addTodo(todo: Omit<TodoData, "id">): Promise<void> {
+  const { error } = await supabase.from("todos").insert([todo]);
+
+  if (error) {
+    console.error("Error adding todo:", error);
+    throw error;
+  }
+}

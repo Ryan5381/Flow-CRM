@@ -1,5 +1,11 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchTodos, updateTodoStatus, deleteTodo } from "../services/todoService";
+import {
+  fetchTodos,
+  updateTodoStatus,
+  deleteTodo,
+  addTodo,
+} from "../services/todoService";
+import type { TodoData } from "../types/data";
 
 export const useTodos = () => {
   const queryClient = useQueryClient();
@@ -31,13 +37,23 @@ export const useTodos = () => {
     },
   });
 
+  // 新增待辦事項
+  const addMutation = useMutation({
+    mutationFn: (newTodo: Omit<TodoData, "id">) => addTodo(newTodo),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
+  });
+
   return {
     todos,
     isLoading,
     error,
     updateTodoStatus: updateStatusMutation.mutateAsync,
     deleteTodo: deleteMutation.mutateAsync,
+    addTodo: addMutation.mutateAsync,
     isUpdating: updateStatusMutation.isPending,
     isDeleting: deleteMutation.isPending,
+    isAdding: addMutation.isPending,
   };
 };
