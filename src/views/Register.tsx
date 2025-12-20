@@ -1,19 +1,16 @@
-import { Form, Input, Button, message } from "antd";
+import { Form, Input, Button } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AuthLayout from "../components/AuthLayout";
 import type { RegisterFormValues } from "../types/data";
+import { useAuth } from "../hooks/useAuth";
 
 const Register = () => {
-  const navigate = useNavigate();
+  const { register, isRegistering } = useAuth();
   const [form] = Form.useForm();
 
   const onFinish = (values: RegisterFormValues) => {
-    console.log("註冊資料:", values);
-    // TODO: 實作註冊 API 呼叫
-    message.success("註冊成功！請登入");
-    // 註冊成功後導向登入頁
-    navigate("/login");
+    register(values);
   };
 
   return (
@@ -100,6 +97,7 @@ const Register = () => {
             htmlType="submit"
             size="large"
             block
+            loading={isRegistering}
             style={{ backgroundColor: "#666" }}
           >
             註冊

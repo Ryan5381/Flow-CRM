@@ -63,8 +63,17 @@ const AddTodoModal = ({ open, onCancel }: AddTodoModalProps) => {
         </Form.Item>
       </Form>
       <div className="flex justify-center gap-2">
-        <Button style={{ width: "100%", borderColor:"#FF0000", color: "#FF0000" }} onClick={onCancel}>取消</Button>
-        <Button style={{ width: "100%", backgroundColor: "#888", color: "#fff" }} onClick={handleOk} loading={isAdding}>
+        <Button
+          style={{ width: "100%", borderColor: "#FF0000", color: "#FF0000" }}
+          onClick={onCancel}
+        >
+          取消
+        </Button>
+        <Button
+          style={{ width: "100%", backgroundColor: "#888", color: "#fff" }}
+          onClick={handleOk}
+          loading={isAdding}
+        >
           確認
         </Button>
       </div>
