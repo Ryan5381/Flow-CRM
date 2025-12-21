@@ -5,10 +5,22 @@ import type { TodoData } from "../types/data";
 
 // 從 Supabase 取得所有待辦事項
 export async function fetchTodos(): Promise<TodoData[]> {
-  const { data, error } = await supabase
+  // 1. 先確認目前使用者身分
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  let query = supabase
     .from("todos")
     .select("*")
     .order("created_at", { ascending: false });
+
+  // 2. 如果有使用者，則根據 user_id 過濾
+  if (user) {
+    query = query.eq("user_id", user.id);
+  }
+
+  const { data, error } = await query;
 
   if (error) {
     console.error("Error fetching todos:", error);
@@ -46,7 +58,23 @@ export async function deleteTodo(id: number): Promise<void> {
 
 // 新增待辦事項
 export async function addTodo(todo: Omit<TodoData, "id">): Promise<void> {
-  const { error } = await supabase.from("todos").insert([todo]);
+  // 1. 取得目前登入的使用者資訊
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+
+  if (authError || !user) {
+    throw new Error("請先登入後再新增待辦事項");
+  }
+
+  // 2. 將 user_id 注入到 todo 資料中
+  const newTodo = {
+    ...todo,
+    user_id: user.id,
+  };
+
+  const { error } = await supabase.from("todos").insert([newTodo]);
 
   if (error) {
     console.error("Error adding todo:", error);
