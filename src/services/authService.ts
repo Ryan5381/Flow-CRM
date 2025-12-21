@@ -1,5 +1,5 @@
 import { supabase } from "../lib/supabase";
-import type { RegisterFormValues } from "../types/data";
+import type { RegisterFormValues, LoginFormValues } from "../types/data";
 
 export async function signUp(values: RegisterFormValues) {
   // 從表單拿到三個欄位
@@ -38,4 +38,23 @@ export async function signUp(values: RegisterFormValues) {
   }
 
   return authData;
+}
+
+// 登入使用者 (使用 Email)
+export async function signIn(values: LoginFormValues) {
+  const { email, password } = values;
+
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (error) throw error;
+  return data;
+}
+
+// 登出使用者
+export async function signOut() {
+  const { error } = await supabase.auth.signOut();
+  if (error) throw error;
 }

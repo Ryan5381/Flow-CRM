@@ -1,19 +1,16 @@
-import { Form, Input, Button, message } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { Link, useNavigate } from "react-router-dom";
+import { Form, Input, Button } from "antd";
+import { MailOutlined, LockOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 import AuthLayout from "../components/AuthLayout";
 import type { LoginFormValues } from "../types/data";
+import { useAuth } from "../hooks/useAuth";
 
 const Login = () => {
-  const navigate = useNavigate();
+  const { login, isLoggingIn } = useAuth();
   const [form] = Form.useForm();
 
   const onFinish = (values: LoginFormValues) => {
-    console.log("登入資料:", values);
-    // TODO: 實作登入 API 呼叫
-    message.success("登入成功！");
-    // 登入成功後導向首頁
-    navigate("/");
+    login(values);
   };
 
   return (
@@ -27,13 +24,16 @@ const Login = () => {
         requiredMark={false}
       >
         <Form.Item
-          label="帳號"
-          name="username"
-          rules={[{ required: true, message: "請輸入帳號" }]}
+          label="Email"
+          name="email" // 欄位名維持 username 以適配 LoginFormValues，內容填 email
+          rules={[
+            { required: true, message: "請輸入 Email" },
+            { type: "email", message: "請輸入有效的 Email 格式" },
+          ]}
         >
           <Input
-            prefix={<UserOutlined className="text-gray-400" />}
-            placeholder="請輸入帳號"
+            prefix={<MailOutlined className="text-gray-400" />}
+            placeholder="請輸入註冊時的 Email"
             size="large"
           />
         </Form.Item>
@@ -56,6 +56,7 @@ const Login = () => {
             htmlType="submit"
             size="large"
             block
+            loading={isLoggingIn}
             style={{ color: "#fff", backgroundColor: "#666" }}
           >
             登入
