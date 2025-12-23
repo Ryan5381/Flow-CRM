@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Layout, Table, Button, Space, Input, Card, Typography } from "antd";
+import { Table, Button, Space, Input, Card, Typography, Modal } from "antd";
 import type { TableColumnType } from "antd";
 import {
   PlusOutlined,
@@ -9,147 +9,212 @@ import {
   FilterOutlined,
 } from "@ant-design/icons";
 import ContactsModal from "./ContactsModal";
-const { Content } = Layout;
+import { useContacts } from "../hooks/useContacts";
+import type { ContactData } from "../types/data";
+
 const { Title, Text } = Typography;
 
-// Mock data
-const mockContacts = [
-  {
-    id: 1,
-    name: "王小明",
-    email: "ming@example.com",
-    phone: "0912-345-678",
-    company: "飛越科技",
-    job_title: "採購經理",
-  },
-];
-
 const Contacts = () => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const {
+    contacts,
+    isLoading,
+    isAdding,
+    addContact,
+    isUpdating,
+    updateContact,
+    deleteContact,
+  } = useContacts();
 
-  const columns: TableColumnType[] = [
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
+  const [editingContact, setEditingContact] = useState<ContactData | null>(
+    null
+  );
+  const [contactToDelete, setContactToDelete] = useState<{
+    id: number;
+    name: string;
+  } | null>(null);
+  const [searchText, setSearchText] = useState("");
+
+  // 篩選功能
+  const filteredContacts = contacts.filter(
+    (c) =>
+      c.name.toLowerCase().includes(searchText.toLowerCase()) ||
+      c.company.toLowerCase().includes(searchText.toLowerCase()) ||
+      c.email.toLowerCase().includes(searchText.toLowerCase())
+  );
+
+  const handleAdd = () => {
+    setEditingContact(null);
+    setIsModalVisible(true);
+  };
+
+  const handleEdit = (record: ContactData) => {
+    setEditingContact(record);
+    setIsModalVisible(true);
+  };
+
+  const handleDeleteOpen = (id: number, name: string) => {
+    setContactToDelete({ id, name });
+    setIsDeleteModalVisible(true);
+  };
+
+  const handleDeleteConfirm = () => {
+    if (contactToDelete) {
+      deleteContact(contactToDelete.id);
+      setIsDeleteModalVisible(false);
+      setContactToDelete(null);
+    }
+  };
+
+  const handleModalFinish = (values: any) => {
+    if (editingContact) {
+      updateContact(
+        { id: editingContact.id, updates: values },
+        {
+          onSuccess: () => {
+            setIsModalVisible(false);
+            setEditingContact(null);
+          },
+        }
+      );
+    } else {
+      addContact(values, {
+        onSuccess: () => {
+          setIsModalVisible(false);
+        },
+      });
+    }
+  };
+
+  const columns: TableColumnType<ContactData>[] = [
     {
-      title: "聯絡人",
+      title: "聯絡人姓名",
       dataIndex: "name",
       key: "name",
-      align: "center",
-      render: (text: string) => (
-        <Space size="middle">
-          <div className="flex flex-col">
-            <Text strong className="text-gray-800">
-              {text}
-            </Text>
-          </div>
-        </Space>
-      ),
+      render: (text: string) => <Text strong>{text}</Text>,
     },
     {
-      title: "公司",
+      title: "公司名稱",
+      dataIndex: "company",
       key: "company",
-      align: "center",
-      render: (_: any, record: any) => (
-        <div className="flex flex-col">
-          <Text className="text-gray-800">{record.company}</Text>
-        </div>
-      ),
     },
     {
       title: "職稱",
-      key: "title",
-      align: "center",
-      render: (_: any, record: any) => (
-        <div className="flex flex-col">
-          <Text className="text-gray-800">{record.job_title}</Text>
-        </div>
-      ),
+      dataIndex: "job_title",
+      key: "job_title",
     },
     {
       title: "電話",
+      dataIndex: "phone",
       key: "phone",
-      align: "center",
-      render: (_: any, record: any) => (
-        <div className="flex flex-col">
-          <Text className="text-gray-800">{record.phone}</Text>
-        </div>
-      ),
     },
     {
       title: "Email",
+      dataIndex: "email",
       key: "email",
-      align: "center",
-      render: (_: any, record: any) => (
-        <div className="flex flex-col">
-          <Text className="text-gray-800">{record.email}</Text>
-        </div>
-      ),
     },
     {
       title: "操作",
       key: "action",
-      align: "center",
-      render: (_: any) => (
+      render: (_: any, record: ContactData) => (
         <Space size="small">
           <Button
             type="text"
             icon={<EditOutlined />}
-            className="text-blue-500"
+            className="text-blue-500 hover:text-blue-600"
+            onClick={() => handleEdit(record)}
           />
-          <Button type="text" danger icon={<DeleteOutlined />} />
+          <Button
+            type="text"
+            danger
+            icon={<DeleteOutlined />}
+            onClick={() => handleDeleteOpen(record.id, record.name)}
+          />
         </Space>
       ),
     },
   ];
 
   return (
-    <Layout className="min-h-screen bg-[#f8f9fa]">
-      <Layout style={{ marginLeft: 200 }}>
-        <Content className="m-8">
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <Title level={2} className="m-0!">
-                聯絡人管理
-              </Title>
-              <Text type="secondary">您的專屬客戶名單，隨時隨地輕鬆維護</Text>
-            </div>
-            <Space>
-              <Button icon={<FilterOutlined />}>篩選</Button>
-              <Button
-                type="primary"
-                icon={<PlusOutlined />}
-                onClick={() => setIsModalVisible(true)}
-                size="large"
-                className="bg-[#666] hover:bg-gray-700 border-none shadow-md"
-                style={{ color: "white", backgroundColor: "#666" }}
-              >
-                新增聯絡人
-              </Button>
-            </Space>
-          </div>
+    <div className="flex flex-col gap-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <Title level={2} className="m-0!">
+            聯絡人管理
+          </Title>
+          <Text type="secondary">維護與追蹤您的所有客戶資訊</Text>
+        </div>
+        <Space>
+          <Button icon={<FilterOutlined />}>篩選</Button>
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={handleAdd}
+            size="large"
+            className="bg-[#666] hover:bg-gray-700 border-none shadow-md"
+            style={{ color: "white", backgroundColor: "#666" }}
+          >
+            新增聯絡人
+          </Button>
+        </Space>
+      </div>
 
-          <Card className="shadow-sm rounded-xl overflow-hidden">
-            <div className="mb-4">
-              <Input
-                prefix={<SearchOutlined className="text-gray-400" />}
-                placeholder="搜尋姓名、公司、Email..."
-                className="max-w-xs rounded-lg"
-              />
-            </div>
-            <Table
-              columns={columns}
-              dataSource={mockContacts}
-              rowKey="id"
-              pagination={{ pageSize: 10 }}
-              className="contacts-table"
-            />
-          </Card>
-        </Content>
-      </Layout>
+      <Card className="shadow-sm rounded-lg">
+        <div className="mb-4">
+          <Input
+            prefix={<SearchOutlined className="text-gray-400" />}
+            placeholder="搜尋姓名、公司、Email..."
+            className="max-w-xs rounded-lg"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+        </div>
+        <Table
+          columns={columns}
+          dataSource={filteredContacts}
+          rowKey="id"
+          loading={isLoading}
+          pagination={{ pageSize: 10 }}
+        />
+      </Card>
 
       <ContactsModal
         open={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
+        onFinish={handleModalFinish}
+        initialValues={editingContact}
+        loading={isAdding || isUpdating}
       />
-    </Layout>
+
+      <Modal
+        title="確認刪除"
+        open={isDeleteModalVisible}
+        onCancel={() => setIsDeleteModalVisible(false)}
+        footer={[
+          <Button
+            key="back"
+            onClick={() => setIsDeleteModalVisible(false)}
+            className="hover:border-red-500! hover:text-red-500! transition-all"
+          >
+            取消
+          </Button>,
+          <Button
+            key="submit"
+            type="primary"
+            danger
+            onClick={handleDeleteConfirm}
+            style={{ color: "white", backgroundColor: "#666" }}
+          >
+            確認刪除
+          </Button>,
+        ]}
+        centered
+      >
+        <p>您確定要刪除聯絡人「{contactToDelete?.name}」嗎？</p>
+        <p className="text-gray-400 text-xs mt-2">刪除後將無法復原資料。</p>
+      </Modal>
+    </div>
   );
 };
 

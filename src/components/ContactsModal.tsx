@@ -1,23 +1,42 @@
 import { Modal, Form, Input, Button, Space } from "antd";
+import { useEffect } from "react";
+import type { ContactData } from "../types/data";
 
 interface ContactsModalProps {
   open: boolean;
   onCancel: () => void;
+  onFinish: (values: any) => void;
+  initialValues?: Partial<ContactData> | null;
+  loading?: boolean;
 }
 
-const ContactsModal = ({ open, onCancel }: ContactsModalProps) => {
+const ContactsModal = ({
+  open,
+  onCancel,
+  onFinish,
+  initialValues,
+  loading,
+}: ContactsModalProps) => {
   const [form] = Form.useForm();
 
-  const handleFinish = (values: any) => {
-    console.log("新增聯絡人:", values);
-    // TODO: 串接 API
-    onCancel();
-    form.resetFields();
+  // 當 initialValues 改變或 Modal 開啟時，更新表單內容
+  useEffect(() => {
+    if (open) {
+      if (initialValues) {
+        form.setFieldsValue(initialValues);
+      } else {
+        form.resetFields();
+      }
+    }
+  }, [open, initialValues, form]);
+
+  const handleSubmit = (values: any) => {
+    onFinish(values);
   };
 
   return (
     <Modal
-      title="建立新聯絡人"
+      title={initialValues ? "編輯聯絡人" : "建立新聯絡人"}
       open={open}
       onCancel={onCancel}
       footer={null}
@@ -25,7 +44,7 @@ const ContactsModal = ({ open, onCancel }: ContactsModalProps) => {
       centered
       width={500}
     >
-      <Form form={form} layout="vertical" onFinish={handleFinish}>
+      <Form form={form} layout="vertical" onFinish={handleSubmit}>
         <div className="grid grid-cols-2 gap-x-4">
           <Form.Item
             name="name"
@@ -62,10 +81,11 @@ const ContactsModal = ({ open, onCancel }: ContactsModalProps) => {
             <Button
               type="primary"
               htmlType="submit"
+              loading={loading}
               style={{ color: "white", backgroundColor: "#666" }}
               className="border-none px-8"
             >
-              確認新增
+              確認{initialValues ? "儲存" : "新增"}
             </Button>
           </Space>
         </Form.Item>
