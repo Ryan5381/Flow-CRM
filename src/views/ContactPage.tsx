@@ -1,5 +1,6 @@
 import Sildebar from "../components/Sildebar";
 import Header from "../components/Header";
+
 import Contacts from "../components/Contacts";
 import Footer from "../components/Footer";
 
@@ -17,7 +18,9 @@ const ContactPage = () => {
 
           {/* 主要內容 */}
           <main className="flex-1 overflow-y-auto p-6">
-            <Contacts />
+            <div className="mx-auto max-w-7xl">
+              <Contacts />
+            </div>
           </main>
         </div>
       </div>

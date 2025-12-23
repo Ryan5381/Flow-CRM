@@ -38,3 +38,14 @@ export interface LoginFormValues {
   email: string;
   password: string;
 }
+
+export interface ContactData {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  job_title: string;
+  company: string;
+  user_id: string;
+  created_at: string;
+}
