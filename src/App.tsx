@@ -7,6 +7,7 @@ function App() {
   const Login = lazy(() => import("./views/Login"));
   const Register = lazy(() => import("./views/Register"));
   const ContactPage = lazy(() => import("./views/ContactPage"));
+  const CompanyPage = lazy(() => import("./views/CompanyPage"));
 
   return (
     <ConfigProvider
@@ -41,6 +42,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/contacts" element={<ContactPage />} />
+            <Route path="/companies" element={<CompanyPage />} />
           </Routes>
         </Suspense>
       </HashRouter>
