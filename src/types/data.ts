@@ -49,3 +49,15 @@ export interface ContactData {
   user_id: string;
   created_at: string;
 }
+
+export interface CompanyData {
+  id: number;
+  name: string;
+  status: string; // 業務判斷
+  industry: string; // 快速分類
+  owner: string; // 負責人
+  lastInteraction: string; // 最近互動
+  tags: string[]; // 標籤
+  user_id: string;
+  created_at: string;
+}
