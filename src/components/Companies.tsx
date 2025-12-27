@@ -8,6 +8,7 @@ import {
   Typography,
   Tag,
   Tooltip,
+  Popconfirm,
 } from "antd";
 import type { TableColumnType } from "antd";
 import {
@@ -21,31 +22,20 @@ import {
   ClockCircleOutlined,
 } from "@ant-design/icons";
 import type { CompanyData } from "../types/data";
+import { useCompanies } from "../hooks/useCompanies";
 
 const { Title, Text } = Typography;
 
 const Companies = () => {
   const [searchText, setSearchText] = useState("");
-  const companies: CompanyData[] = [
-    {
-      id: 1,
-      name: "科技創新有限公司",
-      status: "正式客戶",
-      industry: "軟體開發",
-      owner: "陳小明",
-      lastInteraction: "2023-10-25",
-      tags: ["高價值", "科技業"],
-      user_id: "1",
-      created_at: "2023-01-01",
-    },
-  ];
+  const { companies, loading, removeCompany } = useCompanies();
 
   const filteredCompanies = companies.filter(
     (c) =>
       c.name.toLowerCase().includes(searchText.toLowerCase()) ||
-      c.industry.toLowerCase() ||
-      c.owner.toLowerCase() ||
-      c.owner.toLowerCase().includes(searchText.toLowerCase())
+      (c.industry &&
+        c.industry.toLowerCase().includes(searchText.toLowerCase())) ||
+      (c.owner && c.owner.toLowerCase().includes(searchText.toLowerCase()))
   );
 
   const columns: TableColumnType<CompanyData>[] = [
@@ -55,7 +45,7 @@ const Companies = () => {
       key: "name",
       render: (text: string) => (
         <Space>
-          <Text strong>{text}</Text>
+          <Text strong>{text || "未命名公司"}</Text>
           <Tooltip title="進入詳情">
             <Button
               type="link"
@@ -76,14 +66,16 @@ const Companies = () => {
         if (status === "正式客戶") color = "green";
         if (status === "潛在客戶") color = "orange";
         if (status === "合作夥伴") color = "blue";
-        return <Tag color={color}>{status}</Tag>;
+        return <Tag color={color}>{status || "不明"}</Tag>;
       },
     },
     {
       title: "產業",
       dataIndex: "industry",
       key: "industry",
-      render: (industry: string) => <Tag color="geekblue">{industry}</Tag>,
+      render: (industry: string) => (
+        <Tag color="geekblue">{industry || "未分類"}</Tag>
+      ),
     },
     {
       title: "負責人",
@@ -92,7 +84,7 @@ const Companies = () => {
       render: (owner: string) => (
         <Space>
           <UserOutlined className="text-gray-400" />
-          <Text>{owner}</Text>
+          <Text>{owner || "未指定"}</Text>
         </Space>
       ),
     },
@@ -103,7 +95,7 @@ const Companies = () => {
       render: (date: string) => (
         <Space>
           <ClockCircleOutlined className="text-gray-400" />
-          <Text>{date}</Text>
+          <Text>{date || "無紀錄"}</Text>
         </Space>
       ),
     },
@@ -111,27 +103,35 @@ const Companies = () => {
       title: "標籤",
       dataIndex: "tags",
       key: "tags",
-      render: (tags: string[]) => (
+      render: (tags: any) => (
         <>
-          {tags.map((tag) => (
-            <Tag key={tag} className="mr-1 mb-1">
-              {tag}
-            </Tag>
-          ))}
+          {Array.isArray(tags) &&
+            tags.map((tag) => (
+              <Tag key={tag} className="mr-1 mb-1">
+                {tag}
+              </Tag>
+            ))}
         </>
       ),
     },
     {
       title: "操作",
       key: "action",
-      render: () => (
+      render: (_, record) => (
         <Space size="small">
           <Button
             type="text"
             icon={<EditOutlined />}
             className="text-blue-500 hover:text-blue-600"
           />
-          <Button type="text" danger icon={<DeleteOutlined />} />
+          <Popconfirm
+            title="確定要刪除這家公司嗎？"
+            onConfirm={() => removeCompany(record.id)}
+            okText="確定"
+            cancelText="取消"
+          >
+            <Button type="text" danger icon={<DeleteOutlined />} />
+          </Popconfirm>
         </Space>
       ),
     },
@@ -174,6 +174,7 @@ const Companies = () => {
           columns={columns}
           dataSource={filteredCompanies}
           rowKey="id"
+          loading={loading}
           pagination={{ pageSize: 10 }}
         />
       </Card>
