@@ -35,7 +35,7 @@ export async function getCompanies() {
 }
 
 // 新增公司資料
-export async function createCompany(
+export async function addCompany(
   company: Omit<CompanyData, "id" | "created_at" | "user_id">
 ) {
   const { data, error } = await supabase

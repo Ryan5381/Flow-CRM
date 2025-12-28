@@ -2,13 +2,13 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import { ConfigProvider } from "antd";
 
-function App() {
-  const Homepage = lazy(() => import("./views/Homepage"));
-  const Login = lazy(() => import("./views/Login"));
-  const Register = lazy(() => import("./views/Register"));
-  const ContactPage = lazy(() => import("./views/ContactPage"));
-  const CompanyPage = lazy(() => import("./views/CompanyPage"));
+const Homepage = lazy(() => import("./views/Homepage"));
+const Login = lazy(() => import("./views/Login"));
+const Register = lazy(() => import("./views/Register"));
+const ContactPage = lazy(() => import("./views/ContactPage"));
+const CompanyPage = lazy(() => import("./views/CompanyPage"));
 
+function App() {
   return (
     <ConfigProvider
       theme={{
