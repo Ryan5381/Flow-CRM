@@ -23,12 +23,18 @@ import {
 } from "@ant-design/icons";
 import type { CompanyData } from "../types/data";
 import { useCompanies } from "../hooks/useCompanies";
+import CompaniesModal from "./CompaniesModal";
 
 const { Title, Text } = Typography;
 
 const Companies = () => {
   const [searchText, setSearchText] = useState("");
-  const { companies, loading, removeCompany } = useCompanies();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [editingCompany, setEditingCompany] = useState<CompanyData | null>(
+    null
+  );
+  const { companies, loading, removeCompany, addCompany, isAdding } =
+    useCompanies();
 
   const filteredCompanies = companies.filter(
     (c) =>
@@ -37,6 +43,25 @@ const Companies = () => {
         c.industry.toLowerCase().includes(searchText.toLowerCase())) ||
       (c.owner && c.owner.toLowerCase().includes(searchText.toLowerCase()))
   );
+
+  const handleAdd = () => {
+    setEditingCompany(null);
+    setIsModalVisible(true);
+  };
+
+  const handleEdit = (record: CompanyData) => {
+    setEditingCompany(record);
+    setIsModalVisible(true);
+  };
+
+  const handleModalFinish = (values: any) => {
+    // 這裡我們只實作新增部分，因為 useCompanies 目前只有 addCompany
+    addCompany(values, {
+      onSuccess: () => {
+        setIsModalVisible(false);
+      },
+    });
+  };
 
   const columns: TableColumnType<CompanyData>[] = [
     {
@@ -123,6 +148,7 @@ const Companies = () => {
             type="text"
             icon={<EditOutlined />}
             className="text-blue-500 hover:text-blue-600"
+            onClick={() => handleEdit(record)}
           />
           <Popconfirm
             title="確定要刪除這家公司嗎？"
@@ -154,6 +180,7 @@ const Companies = () => {
             size="large"
             className="bg-[#666] hover:bg-gray-700 border-none shadow-md"
             style={{ color: "white", backgroundColor: "#666" }}
+            onClick={handleAdd}
           >
             新增公司
           </Button>
@@ -178,6 +205,14 @@ const Companies = () => {
           pagination={{ pageSize: 10 }}
         />
       </Card>
+
+      <CompaniesModal
+        open={isModalVisible}
+        onCancel={() => setIsModalVisible(false)}
+        onFinish={handleModalFinish}
+        initialValues={editingCompany}
+        loading={isAdding}
+      />
     </div>
   );
 };
